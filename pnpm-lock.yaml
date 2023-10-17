@@ -8,8 +8,8 @@ dependencies:
     specifier: ^3.3.1
     version: 3.3.1
   oslo:
-    specifier: ^0.5.0
-    version: 0.5.0
+    specifier: ^0.6.1
+    version: 0.6.1
 
 packages:
 
@@ -2905,8 +2905,8 @@ packages:
       strip-ansi: 7.1.0
     dev: false
 
-  /oslo@0.5.0:
-    resolution: {integrity: sha512-H6MGLiYxAKSqUtamoAk+Qh1OCtRLELKfeOVzJc7inJXXpYn0MIUydK7t/YiVpPo3naBqu/CdUw3bpQhZgU9mnA==}
+  /oslo@0.6.1:
+    resolution: {integrity: sha512-Dr4dZqusz3hdDt87ggCDVcFSF9rB2DbkJuGUi3s/jlHTBxrGqf1IN/QTyl/l1vTQ2bel2m7dlaQu6yfukBeMcQ==}
     dependencies:
       '@node-rs/argon2': 1.5.2
       '@node-rs/bcrypt': 1.7.3

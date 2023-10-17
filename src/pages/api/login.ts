@@ -1,11 +1,11 @@
 import { decodeBase64 } from "oslo/encoding";
 import { generateRandomString, alphabet } from "oslo/random";
-import { validatePasskeyAssertion } from "oslo/passkey";
+import { validateWebAuthnAssertionResponse } from "oslo/webauthn";
 import { challenges, publicKeys, sessions } from "../../db";
 
 import type { APIContext } from "astro";
 import type { LoginAPIBody } from "../../api";
-import type { PasskeyAssertionResponse } from "oslo/passkey";
+import type { WebAuthnAssertionResponse } from "oslo/webauthn";
 
 export async function POST(context: APIContext): Promise<Response> {
   if (context.locals.session) {
@@ -14,7 +14,7 @@ export async function POST(context: APIContext): Promise<Response> {
     });
   }
   const body: LoginAPIBody = await context.request.json();
-  const assertionResponse: PasskeyAssertionResponse = {
+  const response: WebAuthnAssertionResponse = {
     authenticatorData: decodeBase64(body.response.authenticator_data),
     clientDataJSON: decodeBase64(body.response.client_data_json),
     signature: decodeBase64(body.response.signature),
@@ -34,8 +34,8 @@ export async function POST(context: APIContext): Promise<Response> {
     });
   }
   try {
-    await validatePasskeyAssertion({
-      assertionResponse,
+    await validateWebAuthnAssertionResponse({
+      response,
       origin: "http://localhost:4321",
       challenge: decodeBase64(challenge.value),
       publicKey: decodeBase64(publicKey.value),
