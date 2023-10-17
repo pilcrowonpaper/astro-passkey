@@ -1,16 +1,37 @@
 ---
-
+import { users } from "../db";
+const { session } = Astro.locals;
+if (!session) {
+  return Astro.redirect("/login");
+}
+const user = users.get(session.userId)!;
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro passkey with Oslo</title>
+  </head>
+  <body>
+    <h1>Hi, {user.username}!</h1>
+    <p>Your user id is {user.userId}</p>
+    <button id="logout-button">Sign out</button>
+  </body>
 </html>
+
+<script>
+  const logoutButton = document.getElementById("logout-button");
+  if (logoutButton instanceof HTMLButtonElement) {
+    logoutButton.addEventListener("click", async () => {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+      });
+      if (response.ok) {
+        window.location.href = "/login";
+      }
+    });
+  }
+</script>

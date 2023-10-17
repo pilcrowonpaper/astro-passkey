@@ -1,0 +1,42 @@
+---
+const { session } = Astro.locals;
+if (session) {
+  return Astro.redirect("/");
+}
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro passkey with Oslo</title>
+  </head>
+  <body>
+    <h1>Sign up</h1>
+    <form id="signup-form">
+      <label for="username">Username</label><br />
+      <input id="username" name="username" /><br />
+      <button>Sign up with passkeys</button>
+    </form>
+    <a href="/login">Sign in</a>
+  </body>
+</html>
+<script>
+  import { signUp } from "../client/auth";
+
+  const signupForm = document.getElementById("signup-form");
+  if (signupForm instanceof HTMLFormElement) {
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target as HTMLFormElement);
+      const username = formData.get("username");
+      console.log(username)
+      if (!username || typeof username !== "string") {
+        return;
+      }
+      await signUp(username);
+    });
+  }
+</script>

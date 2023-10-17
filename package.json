@@ -10,6 +10,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^3.3.1"
+    "@astrojs/node": "^6.0.3",
+    "astro": "^3.3.1",
+    "oslo": "^0.5.0"
   }
 }
